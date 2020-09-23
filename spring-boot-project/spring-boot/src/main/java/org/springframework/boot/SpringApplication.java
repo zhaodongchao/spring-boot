@@ -275,10 +275,14 @@ public class SpringApplication {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources) {
+		//资源加载器，可以自定义，一般使用默认
 		this.resourceLoader = resourceLoader;
+		//主资源类不能为空
 		Assert.notNull(primarySources, "PrimarySources must not be null");
 		this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));
+		//从classpath上导入的包来推断ApplicationContext的类型
 		this.webApplicationType = WebApplicationType.deduceFromClasspath();
+		//使用spring的类加载器从
 		setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
 		setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
 		this.mainApplicationClass = deduceMainApplicationClass();
